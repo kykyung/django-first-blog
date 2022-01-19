@@ -1,6 +1,6 @@
 # django-first-blog
 
-### Django girls 튜토리얼 따라 만든 블로그
+### Django girls 튜토리얼 복습으로 만든 블로그
 
 <img src="https://1.bp.blogspot.com/-SgT2G_vDGwE/XQjt4RWH1TI/AAAAAAABTNc/0He0eUi8-7QAd0RDvxWGA1MBzphu9hvsgCLcBGAs/s450/animal_chara_computer_penguin.png" width="20%" height="auto" alt="Penguin"></img>
 * 블로그 만들기, 글 작성, 수정, 삭제   
