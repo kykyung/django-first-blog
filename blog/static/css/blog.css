@@ -9,6 +9,7 @@
     background-color: #557C55;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
+    font-family: 'SBAggroB';
 }
 
 .page_header h1, .page_header h1 a, .page_header h1 a:visited, .page_header h1 a:active{
@@ -54,4 +55,9 @@ h1, h2, h3, h4, .title{
 
 .comment {
     margin: 20px 0px 20px 20px;
+}
+
+.page_header .top-menu a:hover{
+    color: #FFBF86 !important;
+    text-decoration: none;
 }

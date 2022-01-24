@@ -126,3 +126,12 @@ LOGIN_REDIRECT_URL='/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+SUMMERNOTE_CONFIG = {
+    'iframe' : True,
+
+    'summernote' : {
+        'width':'100%',
+        'lang' : 'ko-KR'
+    }
+}
