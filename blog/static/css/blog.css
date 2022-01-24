@@ -18,10 +18,10 @@
 }
 
 .content{
-    margin-left: 40px;
+    margin-top:50px;
 }
 
-h1, h2, h3, h4{
+h1, h2, h3, h4, .title{
     font-family: 'SBAggroB';
 }
 
