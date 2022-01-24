@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<form class="form-horizontal" method="post" action="{% url 'signup' %}">
+    {% csrf_token%}
+    <div class="form-group">
+        {{form.username.label_tag}}
+        {{form.username}}
+    </div>
+    <div class="form-group">
+        {{form.password1.label_tag}}
+        {{form.password1}}
+    </div>
+    <div class="form-group">
+        {{form.password2.label_tag}}
+        {{form.password2}}
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="회원가입"/>
+    <input class="btn btn-defaults" type="reset" value="다시작성"/>
+</form>
+{% endblock %}

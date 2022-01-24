@@ -1,8 +1,10 @@
 from cmath import log
+from re import L
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
 from django.utils import timezone
-from .forms import CommentForm, PostForm
+from .forms import CommentForm, PostForm, UserForm
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 def post_list(request):
@@ -98,3 +100,17 @@ def comment_edit(request, pk):
     else:
         form = CommentForm(instance=comment)
     return render(request, 'blog/edit_comment.html',{'form':form})
+
+def signup(request):
+    if request.method=="POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request,user)
+            return redirect('post_list')
+    else:
+        form = UserForm()
+    return render(request, 'registration/signup.html',{'form':form})
