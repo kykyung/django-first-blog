@@ -8,15 +8,15 @@
         <script type="text/javaScript" src="http://www.nsdi.go.kr/lxportal/zcms/nsdi/platform/sdkGeoView.js.html?authkey=285c9f280fba49e984d9a4580bee0bd9"></script>  
     </head>
     <body>
-        <div class="page_header">
+        <div class="page_header row">
+            <h1 class="col-md-8"><a href="/">星が降る眠れない夜に</a></h1>
             {% if user.is_authenticated%}
             <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
-            <p class="top-menu">Hello {{user.username}} <small>(<a href="{%url 'logout'%}" style="color:#F2FFE9;">Log out</a>)</small></p>
+            <p class="top-menu">Hello {{user.username}} <small>(<a href="{%url 'logout'%}" style="color:#FFD700;">Log out</a>)</small></p>
             {% else %}
                 <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}
-            <h1><a href="/">작곡1랭 책은 왜 온천원숭이가 가지고있나</a></h1>
         </div>
         <div class="content container">
             <div class="row">

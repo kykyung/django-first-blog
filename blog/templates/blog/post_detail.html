@@ -11,34 +11,31 @@
         {% endif %}
         <div class="row">
             <h1 class="col-md-8">{{post.title}}</h1>
-        <div class="col-md-4">
-        {% if user.is_authenticated%}
+            <h3 class="col-md-2">{{post.author}}</h3>
+        <div class="col-md-2">
+        {% if user.is_authenticated and user == post.author%}
             <a class="btn btn-danger" href="{% url 'post_remove' pk=post.pk%}" style="float:right; margin-left: 15px;"><span class="glyphicon glyphicon-remove"></span></a>
-            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}" style="float:right"><span class="glyphicon glyphicon-pencil"></span></a>
-           
+            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}" style="float:right"><span class="glyphicon glyphicon-pencil"></span></a>          
         {% endif %}
-        </div>
+        </div>  
         </div>      
-        <div class="row">
-            <p class="col-md-12">{{post.text|safe}}</p>
+        <div class="row" style="padding-left: 15px;">
+            {{post.text|safe}}
         </div>     
     </div>
     <hr>
     <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}" style="float:right;">Add comment</a>
     {%for comment in post.comments.all %}
-        {%if user.is_authenticated or comment.approved_comment %}
     <div class="comment">
         <div class="date">{{comment.created_date | date:'Y-m-d H:i' }}
+            {%if comment.author == user.username %}
             <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk%}"><span class="glyphicon glyphicon-remove"></span></a>
             <a class="btn btn-default" href="{%url 'comment_edit' pk=comment.pk%}"><span class="glyphicon glyphicon-pencil"></span></a>
-        {% if not comment.approved_comment %}
-            <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk%}"><span class="glyphicon glyphicon-ok"></span></a>
-        {% endif %}
+            {% endif %}
         </div>
         <strong>{{comment.author}}</strong>
         <p>{{comment.text|linebreaks}}</p>
     </div>
-        {% endif %}
     {%empty%}
     <p>No comments here yet :(</p>
     {%endfor%}

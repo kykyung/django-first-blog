@@ -62,7 +62,7 @@ def post_publish(request, pk):
     post.publish()
     return redirect('post_detail', pk=pk)
 
-
+@login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -70,6 +70,8 @@ def add_comment_to_post(request, pk):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
+            comment.author = request.user
+            comment.approved_comment = True
             comment.save()
             return redirect('post_detail', pk=post.pk)
     else:
@@ -85,7 +87,8 @@ def comment_approve(request, pk):
 @login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
-    comment.delete()
+    if request.user.username == comment.author:
+        comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
 
 @login_required
@@ -95,7 +98,6 @@ def comment_edit(request, pk):
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid:
             comment = form.save(commit=False)
-            comment.approved_comment = False
             comment.save()
             return redirect('post_detail', pk=comment.post.pk)
     else:
