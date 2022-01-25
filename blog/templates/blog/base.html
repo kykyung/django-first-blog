@@ -1,10 +1,11 @@
 {% load static %}
 <html>
     <head>
-        <title>Django Girls blog</title>
+        <title>blog</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <script type="text/javaScript" src="http://www.nsdi.go.kr/lxportal/zcms/nsdi/platform/sdkGeoView.js.html?authkey=285c9f280fba49e984d9a4580bee0bd9"></script>  
     </head>
     <body>
         <div class="page_header">
@@ -15,15 +16,21 @@
             {% else %}
                 <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}
-            <h1><a href="/">Django Girls Blog</a></h1>
+            <h1><a href="/">작곡1랭 책은 왜 온천원숭이가 가지고있나</a></h1>
         </div>
         <div class="content container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-3">
+                    <div id="map" style="height:500px; border:solid 1px;"></div>
+                </div>
+                <div class="col-md-9">
                     {% block content %}
                     {% endblock%}
                 </div>
             </div>
         </div>
+        <script>
+            var map = new pf.GeoView("map","vworld",true,true);
+        </script>
     </body>
 </html>
