@@ -27,6 +27,8 @@
         <div class="row">
             <div class="col-md-3">
                 <div id="map" style="height:500px; border:solid 1px;"></div>
+                <button class="col-md-6 btn btn-primary drawlayer"><span class="glyphicon glyphicon-pencil"></span></button>
+                <button class="col-md-6 btn btn-danger deletelayer"><span class="glyphicon glyphicon-remove"></span></button>
             </div>
             <div class="col-md-9">
                 {% block content %}
@@ -35,7 +37,68 @@
         </div>
     </div>
     <script>
-        var map = new pf.GeoView("map", "vworld", true, true);
+        var map;
+        var apiUrl = 'http://www.nsdi.go.kr/lxportal/zcms/nsdi/platform/openapi.html'
+        var authkey = '7c573a3211524d12a21ce955590ee5d0'
+        var bboxResult;
+        var userCenter;
+
+        $(document).ready(function () {
+            //지도생성
+            var map = new pf.GeoView("map", "vworld", true, true);
+
+            map.baseMap.getView().setCenter(ol.proj.transform([948988.4139031649, 1947273.5479532676], 'EPSG:3857', 'EPSG:3857'));
+            map.baseMap.getView().setZoom(13);//지도 표출 레벨 설정
+            map.baseMap.getView().setMinZoom(10);//지도 최소레벨 설정
+            map.baseMap.getView().setMaxZoom(16);//지도 최대레벨 설정
+            map.baseMap.updateSize();
+
+            bboxResult = map.baseMap.getView().calculateExtent().toString();
+            userCenter = map.baseMap.getView().getCenter();
+            drawVilayer(bboxResult);
+
+            map.baseMap.on('moveend', function(){
+                bboxResult = map.baseMap.getView().calculateExtent().toString();
+                userCenter = map.baseMap.getView().getCenter();
+            })
+            
+            function drawVilayer(bboxResult){
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        'apitype': 'data',
+                        'resulttype': 'geojson',
+                        'datasets': '15144',
+                        'bbox': bboxResult,
+                        'authkey': authkey,
+                    },
+                    dataType: "json",
+                    async: false,
+                    traditional: true,
+                    url: apiUrl,
+                    success: function (response) {
+                        data = response;
+                    }
+                })
+
+                //시각화설정                
+                map.addMapViLayer(data, "geojson", "layer", "legend", "SGG_OID", null, "시군구경계", 'EPSG:5179');
+
+            }
+
+            function deleteVilayer(){
+                newJquery(".lyhidden").click();
+            }
+
+            $(".drawlayer").on('click',function(){
+                drawVilayer(bboxResult);
+            })
+            $(".deletelayer").on('click',function(){
+                deleteVilayer();
+            })
+
+        })          
+        
     </script>
 </body>
 
