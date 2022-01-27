@@ -11,3 +11,14 @@ https://tutorial-extensions.djangogirls.org/ko
 
 * PythonAnywhere 배포   
 http://kyk1004.pythonanywhere.com/
+
+* * *
+* 게시글에디터
+  * https://summernote.org/
+  * https://github.com/summernote/django-summernote
+
+* * *
+![image](https://user-images.githubusercontent.com/63002535/151122641-273457e2-e503-45fe-b26a-7ff0947c582b.png)
+* 빨간 버튼 -> 현 레이어 삭제
+* 지도 이동 후 파란 버튼 -> 해당 위치에 새 레이어 작성
+* 기존 레이어를 지우고 새로 레이어를 올려야 한다.
