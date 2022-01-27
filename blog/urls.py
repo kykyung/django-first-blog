@@ -14,4 +14,5 @@ urlpatterns=[
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
     path('comment/<int:pk>/edit/', views.comment_edit, name='comment_edit'),
     path('accounts/signup/', views.signup, name='signup'),
+    path('vue/', views.vue ,name='vue'),
     ]

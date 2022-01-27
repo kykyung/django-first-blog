@@ -117,3 +117,6 @@ def signup(request):
     else:
         form = UserForm()
     return render(request, 'registration/signup.html',{'form':form})
+
+def vue(request):
+    return render(request, 'blog/vue.html')

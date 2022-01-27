@@ -9,6 +9,7 @@
     <script type="text/javaScript"
         src="http://www.nsdi.go.kr/lxportal/zcms/nsdi/platform/sdkGeoView.js.html?authkey=7c573a3211524d12a21ce955590ee5d0"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
 </head>
 
 <body>
@@ -22,6 +23,7 @@
         {% else %}
         <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
         {% endif %}
+        <a href="{% url 'vue' %}" class="top-menu" title="Vue.js"><span class="glyphicon glyphicon-star"></span><img href="{% static 'img/vuelogo.png' %}"/></a>
     </div>
     <div class="content container">
         <div class="row">
