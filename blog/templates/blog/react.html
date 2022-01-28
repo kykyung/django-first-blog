@@ -9,71 +9,95 @@
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
 <script type="text/babel">
-    'use strict';
-
-class Clock extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {date:new Date()};
-    }
-    
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(), 1000
+    function Square(props) {
+        return (
+            <button className="square" onClick={props.onClick} class="btn btn-default ttt">{props.value}</button>
         );
     }
-    componentWillUnmount(){
-        clearInterval(this.timerID);
+    class Board extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                squares: Array(9).fill(null),
+                xIsNext: true,
+            };
+        }
+
+        handleClick(i) {
+            const squares = this.state.squares.slice();
+            if(calculateWinner(squares) || squares[i]){
+                return;
+            }
+            squares[i] = this.state.xIsNext ? 'X' : 'O';
+            this.setState({ squares: squares, xIsNext: !this.state.xIsNext, });
+        }
+
+        renderSquare(i) {
+            return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />
+        }
+
+        render() {
+            const winner = calculateWinner(this.state.squares);
+            let status;
+            const boardRow = [];
+            let k = 0;
+            for(let i = 0;i<3;i++){
+                const squares=[];
+                for(let j = 0;j<3;j++){
+                    squares.push(this.renderSquare(3*i+j));
+                    k++
+                }
+                boardRow.push(<div key={k} className="board-row">{squares}</div>)
+            }
+            if (winner) {
+                status = 'Winner : ' + winner;
+            } else {
+                status = 'Next Player : ' + (this.state.xIsNext ? 'X' : 'O')
+            }
+            return (
+                <div>
+                    <div className="status">{status}</div>
+                    {boardRow}
+                </div>
+            );
+        }
     }
-    tick(){
-        this.setState({date : new Date()});
+    class Game extends React.Component {
+        render() {
+            return (
+                <div className="game">
+                    <div className="game-board">
+                        <Board />
+                    </div>
+                </div>
+            )
+        }
     }
 
-    render(){
-        return(<div>
-            <h2>지금은 {this.state.date.toLocaleTimeString()}입니다.</h2>
-        </div>);
-    }
-}
+    ReactDOM.render(
+        <Game />,
+        document.getElementById('root')
+    );
 
-class Counter extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = { counter : 0 };
-
-        this.plusOne = this.plusOne.bind(this);
-        this.setZero = this.setZero.bind(this);
+    function calculateWinner(squares) {
+        const lines = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+        for (let i = 0; i < lines.length; i++) {
+            const [a, b, c] = lines[i];
+            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+                return squares[a];
+            }
+        }
+        return null;
     }
-    plusOne(){
-        this.setState(state => ({counter: state.counter + 1}));
-    }
-    setZero(){
-        this.setState({counter: 0 });
-    }
-    render(){
-        return(<div>
-            <h3>{this.state.counter}</h3>
-            <button onClick={this.plusOne} class="btn btn-default">+1</button>
-            <button onClick={this.setZero} class="btn btn-default">0</button>
-        </div>);
-    }
-}
-
-function App(){
-    return(
-        <div>
-            <Clock />
-            <Counter />
-            <Counter />
-            <Counter />    
-        </div>
-    )
-}
-
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-)
 
 </script>
 
