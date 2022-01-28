@@ -15,15 +15,22 @@
 <body>
     <div class="page_header row">
         <h1 class="col-md-8"><a href="/">星が降る眠れない夜に</a></h1>
-        {% if user.is_authenticated%}
-        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-        <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
-        <p class="top-menu">Hello {{user.username}} <small>(<a href="{%url 'logout'%}" style="color:#FFD700;">Log
-                    out</a>)</small></p>
-        {% else %}
-        <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
-        {% endif %}
-        <a href="{% url 'vue' %}" class="top-menu" title="Vue.js"><span class="glyphicon glyphicon-star"></span><img href="{% static 'img/vuelogo.png' %}"/></a>
+        <div class="col-md-4">
+            <div class="row">
+                {% if user.is_authenticated%}
+                <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+                <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
+                <p class="top-menu">Hello {{user.username}} <small>(<a href="{%url 'logout'%}" style="color:#FFD700;">Log
+                            out</a>)</small></p>
+                {% else %}
+                <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+                {% endif %}
+            </div>
+            <div class="row" style="float:right;">
+                <button class="btn btn-default"><a href="{% url 'vue' %}" title="Vue.js" style="color:#053F5E;">Vue.js</a></button>
+                <button class="btn btn-default"><a href="{% url 'react' %}" title="React.js" style="color:#053F5E;">React.js</a></button>
+            </div>
+        </div>
     </div>
     <div class="content container">
         <div class="row">

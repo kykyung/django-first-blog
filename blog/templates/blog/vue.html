@@ -1,30 +1,24 @@
 {% extends 'blog/base.html' %}
 {% block content %}
+<h3>Vue.js</h3>
+<hr>
 <div id="app">
-    <button v-on:click="add" class="btn btn-default">+1</button>
-    <button v-on:click="setZero" class="btn btn-default">0</button>
-    <div>
-        <h3>Vue 데이터 출력 방법</h3>
-        <h4>1. v-text</h4>
-        <p v-text="counter" style="font-size: xx-large;"></p>
-        <h4>2. v-html</h4>
-        <p v-html="counter" style="font-size: xx-large;"></p>
-    </div>
+    <counter></counter><br>
+    <counter></counter><br>
+    <counter></counter>
 </div>
 <script>
-    var app = new Vue({
-        el:'#app',
-        data : {
-            counter : 0
+    Vue.component('counter',{
+        template:`<div><h3 v-text="counter"></h3>
+                  <button v-on:click="counter += 1" class="btn btn-default">+1</button>
+                  <button v-on:click="counter = 0" class="btn btn-default">0</button></div>
+                 `,
+        data:function(){
+            return {counter:0}
         },
-        methods : {
-            add : function(){
-                this.counter += 1;
-            },
-            setZero : function(){
-                this.counter = 0;
-            }
-        }
+    })
+    new Vue({
+        el:'#app',
     })
 </script>
 {% endblock %}

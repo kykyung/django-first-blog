@@ -15,4 +15,5 @@ urlpatterns=[
     path('comment/<int:pk>/edit/', views.comment_edit, name='comment_edit'),
     path('accounts/signup/', views.signup, name='signup'),
     path('vue/', views.vue ,name='vue'),
+    path('react/',views.react, name='react'),
     ]

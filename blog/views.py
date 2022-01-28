@@ -120,3 +120,6 @@ def signup(request):
 
 def vue(request):
     return render(request, 'blog/vue.html')
+
+def react(request):
+    return render(request, 'blog/react.html')
