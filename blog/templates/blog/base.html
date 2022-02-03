@@ -69,8 +69,7 @@
 
             bboxResult = map.baseMap.getView().calculateExtent().toString();
             userCenter = map.baseMap.getView().getCenter();
-            drawVilayer(bboxResult);
-            
+
             $.ajax({
                 type:"POST",
                 data:{
@@ -82,6 +81,7 @@
                 url:apiUrl,
                 success : function(response){
                     var dataList = $("#dataList");
+                    console.log(response)
                     for(key in response){
                         var obj_seq = response[key].OBJ_SEQ;
                         var obj_kname = response[key].OBJ_KNAME;
@@ -89,6 +89,8 @@
                     }
                 }
             })
+
+            drawVilayer(bboxResult);
 
             map.baseMap.on('moveend', function(){
                 bboxResult = map.baseMap.getView().calculateExtent().toString();
