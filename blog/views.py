@@ -85,6 +85,23 @@ def comment_approve(request, pk):
     return redirect('post_detail', pk=comment.post.pk)
 
 @login_required
+def add_comment_to_comment(request, pk, post_pk):
+    parent_comment = get_object_or_404(Comment,pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = parent_comment.post
+            comment.author = request.user
+            comment.approved_comment = True
+            comment.depth = parent_comment.depth + 1
+            comment.save()
+            return redirect('post_detail',pk = post_pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/add_comment_to_post.html', {'form':form})
+                
+@login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.user.username == comment.author:

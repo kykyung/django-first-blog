@@ -13,6 +13,7 @@ urlpatterns=[
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
     path('comment/<int:pk>/edit/', views.comment_edit, name='comment_edit'),
+    path('<int:post_pk>/comment/<int:pk>/comment/',views.add_comment_to_comment,name="add_comment_to_comment"),
     path('accounts/signup/', views.signup, name='signup'),
     path('vue/', views.vue ,name='vue'),
     path('react/',views.react, name='react'),
