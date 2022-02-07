@@ -25,7 +25,7 @@ class Comment(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
-    parent = models.ForeignKey('self',on_delete=models.CASCADE,related_name='parent_comments',null=True)
+    parent = models.ForeignKey('blog.Comment',on_delete=models.CASCADE,related_name='parent_comments',null=True)
     depth = models.IntegerField(default=0)
 
     def approve(self):

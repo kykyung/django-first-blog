@@ -92,6 +92,7 @@ def add_comment_to_comment(request, pk, post_pk):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = parent_comment.post
+            comment.parent = parent_comment
             comment.author = request.user
             comment.approved_comment = True
             comment.depth = parent_comment.depth + 1

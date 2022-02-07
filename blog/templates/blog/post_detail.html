@@ -43,6 +43,10 @@
                 class="glyphicon glyphicon-plus"></span></a>
         {%endif%}
     </div>
+    <div>
+        parent : {{comment.parent}}
+        depth : {{comment.depth}}
+    </div>
     <strong>{{comment.author}}</strong>
     <p>{{comment.text|linebreaks}}</p>
 </div>
