@@ -133,5 +133,25 @@ SUMMERNOTE_CONFIG = {
     'summernote' : {
         'width':'100%',
         'lang' : 'ko-KR',
-    }
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video','map']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
+    },
+    'js':(
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.js',
+        os.path.join(STATIC_URL, 'summernote/summernote-map-plugin.js'),        
+    ),
+    'css': (
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.css',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/monokai.min.css',
+        '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'
+    ),
+    
 }
