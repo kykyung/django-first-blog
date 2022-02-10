@@ -151,7 +151,7 @@ SUMMERNOTE_CONFIG = {
     'css': (
         '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.css',
         '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/monokai.min.css',
-        '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'
+        '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css',
     ),
     
 }
