@@ -3,48 +3,96 @@
 <h3>Vue.js</h3>
 <hr>
 <div id="app">
-    <todo-header></todo-header>
-    <todo-input></todo-input>
-    <todo-list></todo-list>
-    <todo-footer></todo-footer>
+     <todo-header></todo-header>
+     <todo-input></todo-input>
+     <todo-list></todo-list>
+     <todo-footer></todo-footer>
 </div>
 <script>
-   var header = {
-        template:'<div><h4>todo!</h4></div>',
-        data : {
-            
-        }
-   }
-   var todoInput = {
-        template:'<div>input</div>',
-        data : {
-           
-        }
-   }
-   var todoList = {
-        template:'<div>list</div>',
-        data : {
-            
-        }    
-   }
-   var footer = {
-        template:'<div>footer</div>',
-        data : {
-            
-        }
-   }
+     var header = {
+          template: '<div><h4>todo!</h4></div>',
+          data: {
 
-   var app = new Vue({
-       el : '#app',
-       components : {
-           'todo-header' : header,
-           'todo-input' : todoInput,
-           'todo-list' : todoList,
-           'todo-footer' : footer
-       },
-       data : {
+          }
+     }
+     var todoInput = {
+          template: `<div class="input-group">
+                         <span class="input-group-addon"><span class="glyphicon glyphicon-ok"></span></span>
+                         <input type="text" class="form-control" v-model="newTodoItem">
+                         <span class="input-group-btn"><button class="btn btn-default" v-on:click="addTodo"><strong>Add</strong></button></span>
+                    </div>`,
+          data: function(){
+               return {
+                    newTodoItem : ''
+               }
+          },
+          methods:{
+               addTodo:function(){
+                    if(this.newTodoItem !== ''){
+                         var value = this.newTodoItem && this.newTodoItem.trim();
+                         localStorage.setItem(value, value);
+                         this.clearInput();
+                    }
+               },
+               clearInput:function(){
+                    this.newTodoItem='';
+               }
+          }
+     }
+     var todoList = {
+          template: `<div>
+                         <ul>
+                              <li class="shadow" v-for="(todoItem, index) in todoItems" :key="todoItem">
+                                   <span class="checkBtn glyphicon glyphicon-ok"></span>
+                                   &#123;&#123;todoItem&#125;&#125;
+                                   <span class="btn removeBtn glyphicon glyphicon-trash" v-on:click="removeTodo(todoItem, index)"></span>
+                              </li>
+                         </ul>
+                     </div>`,
+          data: function(){
+               return {
+                    todoItems : []
+               }
+          },
+          created : function(){
+               if(localStorage.length>0){
+                    for(var i = 0 ; i < localStorage.length ; i++){
+                         this.todoItems.push(localStorage.key(i));
+                    }
+               }
+          },
+          methods : {
+               removeTodo : function(todoItem, index){
+                   localStorage.removeItem(todoItem);
+                   this.todoItems.splice(index, 1);
+               }
+          }
+     }
+     var footer = {
+          template: `<div>
+                         <button class="btn btn-default" v-on:click="clearTodo">Clear All</button>
+                     </div>`,
+          data: {
 
-       }
-   })
+          },
+          methods : {
+               clearTodo : function(){
+                    localStorage.clear();
+               }
+          }
+     }
+
+     var app = new Vue({
+          el: '#app',
+          components: {
+               'todo-header': header,
+               'todo-input': todoInput,
+               'todo-list': todoList,
+               'todo-footer': footer
+          },
+          data: {
+
+          }
+     })
 </script>
 {% endblock %}
