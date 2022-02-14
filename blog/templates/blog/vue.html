@@ -42,13 +42,13 @@
      var todoList = {
           props: ['propsdata'],
           template: `<div>
-                         <ul>
+                         <transition-group name="list" tag="ul">
                               <li class="shadow" v-for="(todoItem, index) in propsdata" :key="todoItem">
                                    <span class="checkBtn glyphicon glyphicon-ok"></span>
                                    &#123;&#123;todoItem&#125;&#125;
                                    <span class="btn removeBtn glyphicon glyphicon-trash" v-on:click="removeTodo(todoItem, index)"></span>
                               </li>
-                         </ul>
+                         </transition-group>
                      </div>`,
           methods: {
                removeTodo: function (todoItem, index) {
