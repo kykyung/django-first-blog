@@ -42,9 +42,17 @@
     margin-right: 5px;
 }
 
-.removeBtn{
-    line-height:35px;
+.listBtn{
     margin-left: auto;
+}
+
+.editBtn{
+    line-height:35px;   
+    color:#54BAB9;
+}
+
+.removeBtn{
+    line-height:35px;   
     color:#DD4A48;
 }
 
@@ -54,5 +62,5 @@
 
 .list-enter, .list-leave-to{
     opacity: 0;
-    transform:translateY(30px)
+    transform:translateX(30px)
 }

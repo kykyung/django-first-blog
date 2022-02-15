@@ -5,18 +5,16 @@
 <div id="app">
      <todo-header></todo-header>
      <todo-input v-on:add-todo="addTodo"></todo-input>
-     <todo-list v-bind:propsdata="todoItems" v-on:remove-todo="removeTodo"></todo-list>
+     <todo-list v-bind:propsdata="todoItems" v-on:remove-todo="removeTodo" v-on:edit-todo="editTodo"></todo-list>
      <todo-footer v-on:clear-todo="clearTodo"></todo-footer>
 </div>
-<div id="app2">
-     <test-event v-on:send-event="testEvent"></test-event>
-</div>
 <script>
+
      var todoHeader = {
           template: '<div><h4>todo!</h4></div>',
      }
      var todoInput = {
-          template: `<div class="input-group">
+          template: `<div class="input-group" style="margin-bottom:15px;">
                          <span class="input-group-addon"><span class="glyphicon glyphicon-ok"></span></span>
                          <input type="text" class="form-control" v-model="newTodoItem"  v-on:keyup.enter="addTodo">
                          <span class="input-group-btn"><button class="btn btn-default" v-on:click="addTodo"><strong>Add</strong></button></span>
@@ -42,19 +40,46 @@
      var todoList = {
           props: ['propsdata'],
           template: `<div>
+                              <div class="input-group" v-if="flag">
+                                   <input class="form-control" v-model="editItem" v-on:keyup.enter="editTodo(editItem)">
+                                   <input type="hidden" v-model="index">
+                                   <input type="hidden" v-model="todoItem">
+                                   <span class="input-group-btn"><button class="btn btn-default" v-on:click="editTodo(editItem)"><strong>Edit</strong></button></span>
+                              </div>
                          <transition-group name="list" tag="ul">
                               <li class="shadow" v-for="(todoItem, index) in propsdata" :key="todoItem">
                                    <span class="checkBtn glyphicon glyphicon-ok"></span>
                                    &#123;&#123;todoItem&#125;&#125;
+                                   <span class="listBtn">
+                                   <span class="btn editBtn glyphicon glyphicon-pencil" v-on:click="editOpen(todoItem, index)"></span>
                                    <span class="btn removeBtn glyphicon glyphicon-trash" v-on:click="removeTodo(todoItem, index)"></span>
+                                   </span>
                               </li>
                          </transition-group>
                      </div>`,
+          data : function(){
+               return {
+                    flag : false,
+                    editItem : '',
+                    todoItem : '',
+                    index : 0,
+               }
+          },
           methods: {
                removeTodo: function (todoItem, index) {
                     this.$emit('remove-todo', todoItem, index)
+               },
+               editOpen : function(todoItem, index){
+                    this.flag = !this.flag
+                    this.index = index
+                    this.editItem = todoItem
+                    this.todoItem = todoItem
+               },
+               editTodo : function(editItem){
+                    this.$emit('edit-todo', editItem, this.index, this.todoItem)
+                    this.flag = !this.flag
                }
-          }
+          },
      }
      var todoFooter = {
           template: `<div>
@@ -75,7 +100,7 @@
                'todo-list': todoList,
                'todo-footer': todoFooter,
           },
-          data:function(){
+          data: function () {
                return {
                     todoItems: []
                }
@@ -91,8 +116,13 @@
                },
                clearTodo: function () {
                     localStorage.clear();
-                    this.todoItems=[];
+                    this.todoItems = [];
                },
+               editTodo : function(editItem, index, todoItem){
+                    localStorage.removeItem(todoItem)
+                    localStorage.setItem(editItem, editItem)
+                    this.todoItems[index] = editItem
+               }
           },
           created: function () {
                if (localStorage.length > 0) {
@@ -102,5 +132,6 @@
                }
           },
      })
+
 </script>
 {% endblock %}
