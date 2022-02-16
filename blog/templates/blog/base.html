@@ -84,7 +84,6 @@
                 url:apiUrl,
                 success : function(response){
                     var dataList = $("#dataList");
-                    console.log(response)
                     for(key in response){
                         var obj_seq = response[key].OBJ_SEQ;
                         var obj_kname = response[key].OBJ_KNAME;
