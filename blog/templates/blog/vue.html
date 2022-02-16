@@ -138,9 +138,9 @@
 
      var mapapp = new Vue({
           el : '#mapapp',
-          template : `<div id="map"  style="height: 400px; width:100%;border: solid 1px;"></div>`,
+          template : `<div id="vuemap"  style="height: 400px; width:100%;border: solid 1px;"></div>`,
           mounted : function(){
-               new pf.GeoView("map", "vworld", true, true);
+               new pf.GeoView("vuemap", "vworld", true, true);
           }
      })
 
