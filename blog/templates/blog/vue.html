@@ -154,11 +154,13 @@
                     },
                }).then(function(response){
                     for(key in response){
+                         console.log(response);
                          this.tableList.set(response[key].OBJ_SEQ, response[key].OBJ_KNAME)
                     }
                })
           }
-     }
+     }     
+
      var mapapp = new Vue({
           el : '#mapapp',
           template : `<div>
@@ -167,16 +169,45 @@
                      </div>`,
           data : function(){
                return {
-                    map : {},
+                    map : new Object,
+                    dataset : '',
+                    bboxResult : new Object,
+                    userCenter : new Object,
                }
           },
           mounted : function(){
                this.map = new pf.GeoView("vuemap", "vworld", true, true);
+               this.map.baseMap.getView().setCenter(ol.proj.transform([948988.4139031649, 1947273.5479532676], 'EPSG:3857', 'EPSG:3857'));
+               this.map.baseMap.getView().setZoom(13);//지도 표출 레벨 설정
+               this.map.baseMap.getView().setMinZoom(10);//지도 최소레벨 설정
+               this.map.baseMap.getView().setMaxZoom(16);//지도 최대레벨 설정
+               this.map.baseMap.updateSize();
+
+               drawVueMap(this.map)
           },
           components : {
                'data-list' : dataList
           }
      })
+
+     function drawVueMap(map){
+          var vueMapdata;
+          axios({
+               method : 'post',
+               url : apiUrl,
+               data : {
+                    'apitype': 'data',
+                    'resulttype':'geojson',
+                    'datasets':'12845',
+                    'bbox':'833650.614474257,1943286.5512082838,970380.2826180774,1961733.2057452637',
+                    'authkey':authkey 
+               }
+          }).then(function(response){
+               vueMapdata = response;
+          })
+
+          map.addMapViLayer(vueMapdata, "geojson","layer","legend","SGG_OID",null,"샘플 데이터",'EPSG:5179')
+     }
 
 </script>
 {% endblock %}
