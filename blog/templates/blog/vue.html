@@ -136,7 +136,9 @@
           },
      })
 //===================  vue api map ===================
-
+     var apiUrl = 'http://www.nsdi.go.kr/lxportal/zcms/nsdi/platform/openapi.html'
+     var authkey = '7c573a3211524d12a21ce955590ee5d0'
+     
      var dataList = {
           template : `<transition-group name="list" tag="select" class="form-control">
                          <option v-for="(obj_seq, obj_kname) in tableList" value="obj_seq" :key="obj_seq">&#123;&#123;obj_kname&#125;&#125;</option>
