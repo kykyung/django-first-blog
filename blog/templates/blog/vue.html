@@ -185,28 +185,32 @@
                this.map.baseMap.getView().setMaxZoom(16);//지도 최대레벨 설정
                this.map.baseMap.updateSize();
 
-               drawMap_axios(this.map)
+               drawMap(this.map)
           },
           components : {
                'data-list' : dataList
           }
      })
 
-     function drawMap_axios(map){
+     function drawMap(map){
           var data;
-          axios({
-               method : 'post',
-               url : apiUrl,
-               data : {
-                    'apitype': 'data',
-                    'resulttype':'geojson',
-                    'datasets':'12845',
-                    'bbox':'833650.614474257,1943286.5512082838,970380.2826180774,1961733.2057452637',
-                    'authkey':authkey 
-               }
-          }).then(function(response){
-               data = response;
-          })
+          $.ajax({
+                    type: "POST",
+                    data: {
+                        'apitype': 'data',
+                        'resulttype': 'geojson',
+                        'datasets': '12845',
+                        'bbox': '833650.614474257,1943286.5512082838,970380.2826180774,1961733.2057452637',
+                        'authkey': authkey,
+                    },
+                    dataType: "json",
+                    async: false,
+                    traditional: true,
+                    url: apiUrl,
+                    success: function (response) {
+                        data = response;
+                    }
+                })
 
           map.addMapViLayer(data, "geojson","layer","legend","SGG_OID",null,"샘플 데이터",'EPSG:5179')
      }
