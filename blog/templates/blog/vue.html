@@ -158,12 +158,12 @@
                }
           },
           mounted : function(){
-               // this.map = new pf.GeoView("vuemap", "vworld", true, true);
-               // this.map.baseMap.getView().setCenter(ol.proj.transform([948988.4139031649, 1947273.5479532676], 'EPSG:3857', 'EPSG:3857'));
-               // this.map.baseMap.getView().setZoom(13);//지도 표출 레벨 설정
-               // this.map.baseMap.getView().setMinZoom(10);//지도 최소레벨 설정
-               // this.map.baseMap.getView().setMaxZoom(16);//지도 최대레벨 설정
-               // this.map.baseMap.updateSize();
+               this.map = new pf.GeoView("vuemap", "vworld", true, true);
+               this.map.baseMap.getView().setCenter(ol.proj.transform([948988.4139031649, 1947273.5479532676], 'EPSG:3857', 'EPSG:3857'));
+               this.map.baseMap.getView().setZoom(13);//지도 표출 레벨 설정
+               this.map.baseMap.getView().setMinZoom(10);//지도 최소레벨 설정
+               this.map.baseMap.getView().setMaxZoom(16);//지도 최대레벨 설정
+               this.map.baseMap.updateSize();
 
                axios.post(apiUrl, null,{
                     params : {
