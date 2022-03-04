@@ -191,7 +191,7 @@
                          'authkey': authkey,
                     }}).then(function(response){
                          data = response
-                         var name = dataList.filter((obj) => {
+                         var name = this.dataList.filter((obj) => {
                          if(obj.obj_seq === this.selectedMap){
                          return obj.obj_kname
                          }
