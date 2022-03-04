@@ -142,9 +142,9 @@
           el : '#mapapp',
           template : `<div>
                          <div id="vuemap"  style="height: 400px; width:50%;border: solid 1px;"></div>
-                         <transition-group name="list" tag="select" class="form-control" style="width:50%;" v-model="selectedMap">
+                         <select class="form-control" style="width:50%;" v-model="selectedMap">
                          <option v-for="data in dataList" v-bind:value="data.obj_seq" :key="data.obj_seq">&#123;&#123;data.obj_kname&#125;&#125;</option>
-                         </transition-group>
+                         </select>
                          <p><h4>선택된 지도 : &#123;&#123;selectedMap&#125;&#125;</h4></p>
                      </div>`,
           data : function(){
@@ -154,16 +154,16 @@
                     bboxResult : new Object,
                     userCenter : new Object,
                     dataList : new Array,
-                    selectedMap : '20180918DS00006'
+                    selectedMap : ''
                }
           },
           mounted : function(){
-               this.map = new pf.GeoView("vuemap", "vworld", true, true);
-               this.map.baseMap.getView().setCenter(ol.proj.transform([948988.4139031649, 1947273.5479532676], 'EPSG:3857', 'EPSG:3857'));
-               this.map.baseMap.getView().setZoom(13);//지도 표출 레벨 설정
-               this.map.baseMap.getView().setMinZoom(10);//지도 최소레벨 설정
-               this.map.baseMap.getView().setMaxZoom(16);//지도 최대레벨 설정
-               this.map.baseMap.updateSize();
+               // this.map = new pf.GeoView("vuemap", "vworld", true, true);
+               // this.map.baseMap.getView().setCenter(ol.proj.transform([948988.4139031649, 1947273.5479532676], 'EPSG:3857', 'EPSG:3857'));
+               // this.map.baseMap.getView().setZoom(13);//지도 표출 레벨 설정
+               // this.map.baseMap.getView().setMinZoom(10);//지도 최소레벨 설정
+               // this.map.baseMap.getView().setMaxZoom(16);//지도 최대레벨 설정
+               // this.map.baseMap.updateSize();
 
                axios.post(apiUrl, null,{
                     params : {
