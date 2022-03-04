@@ -145,7 +145,7 @@
                          <transition-group name="list" tag="select" class="form-control" style="width:50%;" v-model="selectedMap">
                          <option v-for="data in dataList" v-bind:value="data.obj_seq" :key="data.obj_seq">&#123;&#123;data.obj_kname&#125;&#125;</option>
                          </transition-group>
-                         <button class="col-md-3 btn btn-primary drawlayer" v-on:click="drawMap"><span class="glyphicon glyphicon-pencil"></span></button>
+                         <p><h4>선택된 지도 : &#123;&#123;selectedMap&#125;&#125;</h4></p>
                      </div>`,
           data : function(){
                return {
