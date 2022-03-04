@@ -9,8 +9,7 @@
      <todo-footer v-on:clear-todo="clearTodo"></todo-footer>
 </div>
 <hr>
-<div id="mapapp">
-</div>
+<div id="mapapp"></div>
 <script>
 //===================  vue todo ===================
      var todoHeader = {
@@ -138,36 +137,15 @@
 //===================  vue api map ===================
      var apiUrl = 'http://www.nsdi.go.kr/lxportal/zcms/nsdi/platform/openapi.html'
      var authkey = '7c573a3211524d12a21ce955590ee5d0'
-     
-     var dataList = {
-          template : `<transition-group name="list" tag="select" class="form-control">
-                         <option v-for="(obj_seq, obj_kname) in tableList" value="obj_seq" :key="obj_seq">&#123;&#123;obj_kname&#125;&#125;</option>
-                    </transition-group>`,
-          data : function(){
-               return{
-                    tableList : new Map(),
-               }
-          },
-          mounted : function(){
-               axios.post(apiUrl, {
-                    data : {
-                         'apitype':'dataList',
-                         'authkey':authkey,
-                    },
-               }).then(function(response){
-                    for(key in response){
-                         console.log(response);
-                         this.tableList.set(response[key].OBJ_SEQ, response[key].OBJ_KNAME)
-                    }
-               })
-          }
-     }     
-
+  
      var mapapp = new Vue({
           el : '#mapapp',
           template : `<div>
                          <div id="vuemap"  style="height: 400px; width:50%;border: solid 1px;"></div>
-                         <data-list></data-list>
+                         <transition-group name="list" tag="select" class="form-control" style="width:50%;" v-model="selectedMap">
+                         <option v-for="data in dataList" v-bind:value="data.obj_seq" :key="data.obj_seq">&#123;&#123;data.obj_kname&#125;&#125;</option>
+                         </transition-group>
+                         <button class="col-md-3 btn btn-primary drawlayer" v-on:click="drawMap"><span class="glyphicon glyphicon-pencil"></span></button>
                      </div>`,
           data : function(){
                return {
@@ -175,6 +153,8 @@
                     dataset : '',
                     bboxResult : new Object,
                     userCenter : new Object,
+                    dataList : new Array,
+                    selectedMap : '20180918DS00006'
                }
           },
           mounted : function(){
@@ -185,10 +165,40 @@
                this.map.baseMap.getView().setMaxZoom(16);//지도 최대레벨 설정
                this.map.baseMap.updateSize();
 
-               drawMap(this.map)
+               axios.post(apiUrl, null,{
+                    params : {
+                         'apitype':'dataList',
+                         'authkey':authkey,
+                    },
+               }).then(function(response){
+                    console.log(response)
+                    for(key in response.data){
+                         this.dataList.push({'obj_seq' : response.data[key].OBJ_SEQ , 'obj_kname': response.data[key].OBJ_KNAME})
+                    }
+               }.bind(this))
+               .catch(function(error){
+                    console.log(error)
+               })
           },
-          components : {
-               'data-list' : dataList
+          methods : {
+               drawMap : function(){
+                    var data;
+                    axios.post(apiUrl,null, {params : {
+                         'apitype': 'data',
+                         'resulttype': 'geojson',
+                         'datasets': this.selectedMap,
+                         'bbox': '833650.614474257,1943286.5512082838,970380.2826180774,1961733.2057452637',
+                         'authkey': authkey,
+                    }}).then(function(response){
+                         data = response
+                         var name = dataList.filter((obj) => {
+                         if(obj.obj_seq === this.selectedMap){
+                         return obj.obj_kname
+                         }
+                    })
+                         this.map.addMapViLayer(data, "geojson","layer","legend","SGG_OID",null,name,'EPSG:5179')
+                    }.bind(this))
+               }
           }
      })
 
